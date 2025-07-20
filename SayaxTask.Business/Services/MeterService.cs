@@ -28,7 +28,7 @@ namespace SayaxTask.Business.Services
                 {
                     MeterName = data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("MeterName")).Value,
                     Method = data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("Method")).Value,
-                    CommissionOrPercentage = data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("CommissionOrPercentage")).Value,
+                    CommissionOrDiscount = decimal.Parse(data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("CommissionOrDiscount")).Value),
                     BTV = decimal.Parse(data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("BTV")).Value),
                     KDV = decimal.Parse(data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("KDV")).Value),
                     TariffName = data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("TariffName")).Value,

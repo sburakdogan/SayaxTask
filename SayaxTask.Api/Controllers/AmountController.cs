@@ -35,7 +35,7 @@ namespace SayaxTask.Api.Controllers
 
             var totalAmount = (energyCost + distributionCost + btvCost) * (1 + meterInfo.KDV / 100);
 
-            return Ok(energyCost + distributionCost + btvCost);
+            return Ok(totalAmount.ToString("C2", new System.Globalization.CultureInfo("tr-TR")));
         }
     }
 }

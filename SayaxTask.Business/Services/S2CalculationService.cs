@@ -19,19 +19,20 @@ namespace SayaxTask.Business.Services
         {
             var totalEnergyCost = 0.0m;
             var totalPTFCost = 0.0m;
+            var totalYEKCost = 0.0m;
 
             var consuptions = _meterService.GetMeterConsuptions(SheetConstants.S1Consuption);
             var allPriceInfo = _priceInfoService.GetAllPriceInfo();
+            var tariffPrice = PriceConstants.GetEnergyTariffPriceByName(meterInfo.TariffName);
 
             foreach (var consuption in consuptions)
             {
                 var ptf = allPriceInfo.FirstOrDefault(x => x.Date == consuption.CombinedDateTime()).PTF;
                 totalPTFCost += (ptf * consuption.Cost);
+                totalYEKCost += (PriceConstants.YEK * consuption.Cost);
             }
 
-            var tariffPrice = PriceConstants.GetEnergyTariffPriceByName(meterInfo.TariffName);
-            totalEnergyCost = totalPTFCost + PriceConstants.YEK + tariffPrice + meterInfo.GetCommissionOrPercentage();
-
+            totalEnergyCost = totalPTFCost + totalYEKCost + meterInfo.CommissionOrDiscount;
             return totalEnergyCost;
         }
     }
