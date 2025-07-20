@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SayaxTask.Business.Abstracts;
 using SayaxTask.Api.Factory;
+using SayaxTask.Api.Models;
 
 namespace SayaxTask.Api.Controllers
 {
@@ -9,15 +10,15 @@ namespace SayaxTask.Api.Controllers
     public class AmountController : ControllerBase
     {
         private readonly CalculationServiceFactory _calculationServiceFactory;
-        private readonly IMeterService _meterService;
+        private readonly IExcelReaderService _meterService;
 
-        public AmountController(CalculationServiceFactory calculationServiceFactory, IMeterService meterService)
+        public AmountController(CalculationServiceFactory calculationServiceFactory, IExcelReaderService meterService)
         {
             _calculationServiceFactory = calculationServiceFactory;
             _meterService = meterService;
         }
 
-        [HttpGet("customer")]
+        [HttpGet]
         public IActionResult GetInvoiceAmount(string meterName)
         {
             if (meterName == null)
@@ -35,7 +36,11 @@ namespace SayaxTask.Api.Controllers
 
             var totalAmount = (energyCost + distributionCost + btvCost) * (1 + meterInfo.KDV / 100);
 
-            return Ok(totalAmount.ToString("C2", new System.Globalization.CultureInfo("tr-TR")));
+            return Ok(new AmountResponseModel
+            {
+                CustomerInvoiceAmount = totalAmount.ToString("C2", new System.Globalization.CultureInfo("tr-TR")),
+                MunicipalityAmount = btvCost.ToString("C2", new System.Globalization.CultureInfo("tr-TR"))
+            });
         }
     }
 }

@@ -6,13 +6,11 @@ namespace SayaxTask.Business.Services
 {
     public class S2CalculationService : BaseCalculationService
     {
-        private readonly IMeterService _meterService;
-        private readonly IPriceInfoService _priceInfoService;
+        private readonly IExcelReaderService _excelReaderService;
 
-        public S2CalculationService(IMeterService meterService, IPriceInfoService priceInfoService)
+        public S2CalculationService(IExcelReaderService excelReaderService)
         {
-            _meterService = meterService;
-            _priceInfoService = priceInfoService;
+            _excelReaderService = excelReaderService;
         }
 
         public override decimal CalculateEnergyCost(MeterInfoDto meterInfo)
@@ -21,8 +19,8 @@ namespace SayaxTask.Business.Services
             var totalPTFCost = 0.0m;
             var totalYEKCost = 0.0m;
 
-            var consuptions = _meterService.GetMeterConsuptions(SheetConstants.S2Consuption);
-            var allPriceInfo = _priceInfoService.GetAllPriceInfo();
+            var consuptions = _excelReaderService.GetMeterConsuptions(SheetConstants.S2Consuption);
+            var allPriceInfo = _excelReaderService.GetAllPriceInfo();
 
             foreach (var consuption in consuptions)
             {
