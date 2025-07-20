@@ -14,10 +14,10 @@ namespace SayaxTask.Business.Dtos
         public string CommissionOrPercentage { get; set; }
 
         [Description("BTV Oranı")]
-        public string BTV { get; set; }
+        public decimal BTV { get; set; }
 
         [Description("KDV Oranı")]
-        public string KDV { get; set; }
+        public decimal KDV { get; set; }
 
         [Description("Tarife Adı")]
         public string TariffName { get; set; }

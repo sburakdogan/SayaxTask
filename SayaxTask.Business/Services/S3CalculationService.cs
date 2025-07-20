@@ -1,23 +1,19 @@
 ﻿using SayaxTask.Business.Abstracts;
+using SayaxTask.Business.Constants;
 using SayaxTask.Business.Dtos;
 
 namespace SayaxTask.Business.Services
 {
-    public class S3CalculationService : ICalculationService
+    public class S3CalculationService : BaseCalculationService
     {
-        public decimal CalculateBTV(decimal totalEnergyCost, int btvPercentage)
+        public override decimal CalculateEnergyCost(MeterInfoDto meterInfo)
         {
-            throw new NotImplementedException();
-        }
+            var totalEnergyCost = 0.0m;
 
-        public decimal CalculateDistributionCost(string tariffName)
-        {
-            throw new NotImplementedException();
-        }
+            var tariffPrice = PriceConstants.GetEnergyTariffPriceByName(meterInfo.TariffName);
+            totalEnergyCost = tariffPrice - (tariffPrice * meterInfo.GetCommissionOrPercentage() / 100);
 
-        public decimal CalculateEnergyCost(MeterInfoDto meterInfo)
-        {
-            throw new NotImplementedException();
+            return totalEnergyCost;
         }
     }
 }

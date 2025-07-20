@@ -13,7 +13,7 @@
             return tariffName switch
             {
                 "Sanayi" => IndustricalEnergyTariff,
-                "TicaretHane" => CommercialEnergyTariff,
+                "Ticarethane" => CommercialEnergyTariff,
                 _ => throw new ArgumentOutOfRangeException(),
             };
         }
