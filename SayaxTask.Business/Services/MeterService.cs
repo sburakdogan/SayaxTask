@@ -7,18 +7,18 @@ namespace SayaxTask.Business.Services
 {
     public class MeterService : IMeterService
     {
-        private IExcelReaderService _excelReaderService;
-        private ReflectionHelper _reflectionHelper;
+        private readonly ExcelReaderHelper _excelReaderHelper;
+        private readonly ReflectionHelper _reflectionHelper;
 
-        public MeterService(IExcelReaderService excelReaderService, ReflectionHelper reflectionHelper)
+        public MeterService(ReflectionHelper reflectionHelper, ExcelReaderHelper excelReaderHelper)
         {
-            _excelReaderService = excelReaderService;
             _reflectionHelper = reflectionHelper;
+            _excelReaderHelper = excelReaderHelper;
         }
 
         public MeterInfoDto GetMeterInfo(string meterName)
         {
-            var excelData = _excelReaderService.GetExcelDataBySheetName(SheetConstants.MeterInfo);
+            var excelData = _excelReaderHelper.ReadFile(SheetConstants.MeterInfo);
 
             var meterInfoList = new List<MeterInfoDto>();
 
@@ -28,7 +28,7 @@ namespace SayaxTask.Business.Services
                 {
                     MeterName = data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("MeterName")).Value,
                     Method = data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("Method")).Value,
-                    CommissionOrDiscount = decimal.Parse(data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("CommissionOrDiscount")).Value),
+                    CommissionOrDiscount = data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("CommissionOrDiscount")).Value,
                     BTV = decimal.Parse(data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("BTV")).Value),
                     KDV = decimal.Parse(data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("KDV")).Value),
                     TariffName = data.FirstOrDefault(x => x.Key == _reflectionHelper.GetDescriptionByProperty<MeterInfoDto>("TariffName")).Value,
@@ -41,7 +41,7 @@ namespace SayaxTask.Business.Services
 
         public List<MeterConsuptionDto> GetMeterConsuptions(string sheetName)
         {
-            var excelData = _excelReaderService.GetExcelDataBySheetName(sheetName);
+            var excelData = _excelReaderHelper.ReadFile(sheetName);
 
             var meterConsuptionList = new List<MeterConsuptionDto>();
 

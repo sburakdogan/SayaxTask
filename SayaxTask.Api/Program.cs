@@ -12,7 +12,6 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IMeterService, MeterService>();
-builder.Services.AddScoped<IExcelReaderService, ExcelReaderService>();
 builder.Services.AddScoped<IPriceInfoService, PriceInfoService>();
 
 builder.Services.AddScoped<S1CalculationService>();

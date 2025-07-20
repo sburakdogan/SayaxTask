@@ -21,9 +21,8 @@ namespace SayaxTask.Business.Services
             var totalPTFCost = 0.0m;
             var totalYEKCost = 0.0m;
 
-            var consuptions = _meterService.GetMeterConsuptions(SheetConstants.S1Consuption);
+            var consuptions = _meterService.GetMeterConsuptions(SheetConstants.S2Consuption);
             var allPriceInfo = _priceInfoService.GetAllPriceInfo();
-            var tariffPrice = PriceConstants.GetEnergyTariffPriceByName(meterInfo.TariffName);
 
             foreach (var consuption in consuptions)
             {
@@ -32,7 +31,7 @@ namespace SayaxTask.Business.Services
                 totalYEKCost += (PriceConstants.YEK * consuption.Cost);
             }
 
-            totalEnergyCost = totalPTFCost + totalYEKCost + meterInfo.CommissionOrDiscount;
+            totalEnergyCost = totalPTFCost + totalYEKCost + decimal.Parse(meterInfo.CommissionOrDiscount.Replace(" TL", ""));
             return totalEnergyCost;
         }
     }

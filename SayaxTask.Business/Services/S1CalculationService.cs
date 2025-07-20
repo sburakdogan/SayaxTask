@@ -31,7 +31,7 @@ namespace SayaxTask.Business.Services
                 totalYEKCost += (PriceConstants.YEK * consuption.Cost);
             }
 
-            totalEnergyCost = (totalPTFCost + totalYEKCost) * (1 + meterInfo.CommissionOrDiscount);
+            totalEnergyCost = (totalPTFCost + totalYEKCost) * (1 + decimal.Parse(meterInfo.CommissionOrDiscount));
             return totalEnergyCost;
         }
     }

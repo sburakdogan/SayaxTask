@@ -7,18 +7,18 @@ namespace SayaxTask.Business.Services
 {
     public class PriceInfoService : IPriceInfoService
     {
-        private readonly IExcelReaderService _excelReaderService;
+        private readonly ExcelReaderHelper _excelReaderHelper;
         private readonly ReflectionHelper _reflectionHelper;
 
-        public PriceInfoService(IExcelReaderService excelReaderService, ReflectionHelper reflectionHelper)
+        public PriceInfoService(ReflectionHelper reflectionHelper, ExcelReaderHelper excelReaderHelper)
         {
-            _excelReaderService = excelReaderService;
             _reflectionHelper = reflectionHelper;
+            _excelReaderHelper = excelReaderHelper;
         }
 
         public List<PriceInfoDto> GetAllPriceInfo()
         {
-            var excelData = _excelReaderService.GetExcelDataBySheetName(SheetConstants.PriceInfo);
+            var excelData = _excelReaderHelper.ReadFile(SheetConstants.PriceInfo);
 
             var priceInfoList = new List<PriceInfoDto>();
 

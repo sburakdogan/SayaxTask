@@ -20,8 +20,7 @@ namespace SayaxTask.Business.Services
             var totalEnergyCost = 0.0m;
             var totalTariffCost = 0.0m;
 
-            var consuptions = _meterService.GetMeterConsuptions(SheetConstants.S1Consuption);
-            var allPriceInfo = _priceInfoService.GetAllPriceInfo();
+            var consuptions = _meterService.GetMeterConsuptions(SheetConstants.S3Consuption);
             var tariffPrice = PriceConstants.GetEnergyTariffPriceByName(meterInfo.TariffName);
 
             foreach (var consuption in consuptions)
@@ -29,7 +28,7 @@ namespace SayaxTask.Business.Services
                 totalTariffCost += (tariffPrice * consuption.Cost);
             }
 
-            totalEnergyCost = totalTariffCost - (totalTariffCost * meterInfo.CommissionOrDiscount);
+            totalEnergyCost = totalTariffCost - (totalTariffCost * decimal.Parse(meterInfo.CommissionOrDiscount));
             return totalEnergyCost;
         }
     }

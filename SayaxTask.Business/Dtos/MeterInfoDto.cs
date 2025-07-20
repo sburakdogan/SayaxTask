@@ -11,7 +11,7 @@ namespace SayaxTask.Business.Dtos
         public string Method { get; set; }
 
         [Description("Komisyon / İndirim")]
-        public decimal CommissionOrDiscount { get; set; }
+        public string CommissionOrDiscount { get; set; }
 
         [Description("BTV Oranı")]
         public decimal BTV { get; set; }
